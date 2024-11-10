@@ -1,4 +1,4 @@
-name: Data Schema Code Convention
+name: SQL Linter
 
 on:
   push:
@@ -8,11 +8,10 @@ jobs:
   SQLLinter:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
+      - name: Checkout Code in Repository
         uses: actions/checkout@v3
-        
-      - name: Install SQLFluff
-        run: pip install sqlfluff
-        
-      - name: Lint SQL Schema
-        run: sqlfluff lint $GITHUB_WORKSPACE/RelationDB_DetailedDataSchema.sql --dialect postgres
+
+      - name: Start SQL Linter
+        run: |
+          pip install sqlfluff
+          sqlfluff lint $GITHUB_WORKSPACE/RelationDB_DetailedDataSchema.sql --dialect postgres
