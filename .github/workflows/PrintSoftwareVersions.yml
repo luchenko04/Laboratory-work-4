@@ -19,6 +19,15 @@ jobs:
   database_version:
     runs-on: ubuntu-latest
     steps:
+      - name: Install PostgreSQL
+        run: |
+          sudo apt update
+          sudo apt install -y postgresql
+
+      - name: Start PostgreSQL service
+        run: |
+          sudo service postgresql start
+
       - name: Check PostgreSQL server version
         run: |
           echo "PostgreSQL server version:"
