@@ -1,0 +1,25 @@
+name: Print Software Versions
+
+on: [push]
+
+jobs:
+  software_version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Node.js version
+        run: |
+          echo "Node.js version:"
+          node -v
+
+      - name: Check PostgreSQL version
+        run: |
+          echo "PostgreSQL version:"
+          psql --version
+
+  database_version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PostgreSQL server version
+        run: |
+          echo "PostgreSQL server version:"
+          sudo -u postgres psql -c "SELECT version();"
