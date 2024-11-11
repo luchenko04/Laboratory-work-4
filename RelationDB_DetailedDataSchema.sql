@@ -88,18 +88,5 @@ CREATE TABLE payments (
     payment_method VARCHAR(20),
     CHECK (payment_method IN ('Кредитна карта', 'Наличные', 'Онлайн оплата')),
     FOREIGN KEY (order_id) REFERENCES orders (order_id)
-);
-
-
-
-
-
-
-
-
-
-
-
-
-
+);     
 
