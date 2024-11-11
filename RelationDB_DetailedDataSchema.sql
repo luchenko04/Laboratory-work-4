@@ -5,14 +5,14 @@ DROP TABLE IF EXISTS painting_catalogs;
 DROP TABLE IF EXISTS catalogs;
 DROP TABLE IF EXISTS sales_agents;
 DROP TABLE IF EXISTS buyers;
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS application_users;
 DROP TABLE IF EXISTS paintings;
 DROP TABLE IF EXISTS artists;
 
 -- Создание таблицы художников
 CREATE TABLE artists (
     artist_id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
+    full_name VARCHAR(50) NOT NULL,
     bio VARCHAR(255),
     birth_date DATE
 );
@@ -28,9 +28,9 @@ CREATE TABLE paintings (
 );
 
 -- Создание таблицы пользователей
-CREATE TABLE users (
+CREATE TABLE application_users (
     user_id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
+    full_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     phone VARCHAR(15),
     password VARCHAR(255) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE buyers (
     buyer_id SERIAL PRIMARY KEY,
     user_id INT,
     address VARCHAR(255),
-    FOREIGN KEY (user_id) REFERENCES users (user_id)
+    FOREIGN KEY (user_id) REFERENCES application_users (user_id)
 );
 
 -- Создание таблицы агентов по продажам
@@ -51,7 +51,7 @@ CREATE TABLE sales_agents (
     agent_id SERIAL PRIMARY KEY,
     user_id INT,
     commission_rate NUMERIC(5, 2),
-    FOREIGN KEY (user_id) REFERENCES users (user_id)
+    FOREIGN KEY (user_id) REFERENCES application_users (user_id)
 );
 
 -- Создание таблицы каталогов
