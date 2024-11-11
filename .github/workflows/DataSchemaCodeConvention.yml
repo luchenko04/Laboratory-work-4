@@ -2,11 +2,12 @@ name: SQL Linter
 
 on:
   push:
-    branches: [main]
+    branches: [LW11]
 
 jobs:
   SQLLinter:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Code in Repository
         uses: actions/checkout@v3
@@ -15,3 +16,5 @@ jobs:
         run: |
           pip install sqlfluff
           sqlfluff lint $GITHUB_WORKSPACE/RelationDB_DetailedDataSchema.sql --dialect postgres
+
+
