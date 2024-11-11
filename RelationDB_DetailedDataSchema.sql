@@ -1,23 +1,34 @@
--- Створення таблиці Художник
-CREATE TABLE Artist (
+-- Удаление существующих таблиц, если они есть
+DROP TABLE IF EXISTS payments;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS painting_catalogs;
+DROP TABLE IF EXISTS catalogs;
+DROP TABLE IF EXISTS sales_agents;
+DROP TABLE IF EXISTS buyers;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS paintings;
+DROP TABLE IF EXISTS artists;
+
+-- Создание таблицы художников
+CREATE TABLE artists (
     artist_id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     bio VARCHAR(255),
     birth_date DATE
 );
 
--- Створення таблиці Картина
-CREATE TABLE Painting (
+-- Создание таблицы картин
+CREATE TABLE paintings (
     painting_id SERIAL PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
     description VARCHAR(255),
     price NUMERIC(10, 2),
     artist_id INT,
-    FOREIGN KEY (artist_id) REFERENCES Artist (artist_id)
+    FOREIGN KEY (artist_id) REFERENCES artists (artist_id)
 );
 
--- Створення таблиці Користувач
-CREATE TABLE Users (
+-- Создание таблицы пользователей
+CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
@@ -27,80 +38,57 @@ CREATE TABLE Users (
     CHECK (user_type IN ('Покупець', 'Агент'))
 );
 
--- Створення таблиці Покупець
-CREATE TABLE Buyer (
+-- Создание таблицы покупателей
+CREATE TABLE buyers (
     buyer_id SERIAL PRIMARY KEY,
     user_id INT,
     address VARCHAR(255),
-    FOREIGN KEY (user_id) REFERENCES Users (user_id)
+    FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
--- Створення таблиці Агент з продажу
-CREATE TABLE SalesAgent (
+-- Создание таблицы агентов по продажам
+CREATE TABLE sales_agents (
     agent_id SERIAL PRIMARY KEY,
     user_id INT,
     commission_rate NUMERIC(5, 2),
-    FOREIGN KEY (user_id) REFERENCES Users (user_id)
+    FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
--- Створення таблиці Каталог
-CREATE TABLE Catalog (
+-- Создание таблицы каталогов
+CREATE TABLE catalogs (
     catalog_id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     description VARCHAR(255)
 );
 
--- Створення таблиці Картина-Каталог
-CREATE TABLE PaintingCatalog (
+-- Создание таблицы для связи картины и каталога
+CREATE TABLE painting_catalogs (
     painting_id INT,
     catalog_id INT,
     PRIMARY KEY (painting_id, catalog_id),
-    FOREIGN KEY (painting_id) REFERENCES Painting (painting_id),
-    FOREIGN KEY (catalog_id) REFERENCES Catalog (catalog_id)
+    FOREIGN KEY (painting_id) REFERENCES paintings (painting_id),
+    FOREIGN KEY (catalog_id) REFERENCES catalogs (catalog_id)
 );
 
--- Створення таблиці Замовлення
-CREATE TABLE Orders (
+-- Создание таблицы заказов
+CREATE TABLE orders (
     order_id SERIAL PRIMARY KEY,
     buyer_id INT,
     order_date DATE,
     total_amount NUMERIC(10, 2),
-    FOREIGN KEY (buyer_id) REFERENCES Buyer (buyer_id)
+    FOREIGN KEY (buyer_id) REFERENCES buyers (buyer_id)
 );
 
--- Створення таблиці Оплата
-CREATE TABLE Payment (
+-- Создание таблицы оплат
+CREATE TABLE payments (
     payment_id SERIAL PRIMARY KEY,
     order_id INT,
     payment_date DATE,
     amount NUMERIC(10, 2),
     payment_method VARCHAR(20),
     CHECK (payment_method IN ('Кредитна карта', 'Наличные', 'Онлайн оплата')),
-    FOREIGN KEY (order_id) REFERENCES Orders (order_id)
+    FOREIGN KEY (order_id) REFERENCES orders (order_id)
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
