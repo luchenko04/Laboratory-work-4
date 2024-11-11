@@ -2,7 +2,8 @@ name: SQL Linter
 
 on:
   push:
-    branches: [main]
+    branches: 
+      - main  # Укажите ветку, для которой должна выполняться проверка
 
 jobs:
   SQLLinter:
@@ -11,7 +12,14 @@ jobs:
       - name: Checkout Code in Repository
         uses: actions/checkout@v3
 
-      - name: Start SQL Linter
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install SQLFluff
+        run: pip install sqlfluff
+
+      - name: Run SQL Linter
         run: |
-          pip install sqlfluff
           sqlfluff lint $GITHUB_WORKSPACE/RelationDB_DetailedDataSchema.sql --dialect postgres
