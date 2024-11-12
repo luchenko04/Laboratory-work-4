@@ -8,6 +8,7 @@ CREATE TABLE Users (
     Password VARCHAR(255) NOT NULL
 );
 
+
 -- Создание таблицы художников
 CREATE TABLE Artists (
     Artist_id NUMBER PRIMARY KEY,
