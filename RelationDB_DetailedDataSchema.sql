@@ -82,17 +82,3 @@ CREATE TABLE Carts (
     FOREIGN KEY (Client_id) REFERENCES Clients (Client_id),
     FOREIGN KEY (Painting_id) REFERENCES Paintings (Painting_id)
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
