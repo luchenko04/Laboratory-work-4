@@ -11,15 +11,10 @@ jobs:
       - name: Checkout Code in Repository
         uses: actions/checkout@v3
 
-      - name: Install SQLFluff
-        run: |
-          pip install sqlfluff
-
       - name: Start SQL Linter
         run: |
-          sqlfluff lint $GITHUB_WORKSPACE/RelationDB_DetailedDataSchema.sql --dialect postgres
-
-
+          pip install sqlfluff
+          sqlfluff lint $GITHUB_WORKSPACE/RelationDB_DetailedDataSchemaModified.sql --dialect postgres
 
 
 
